@@ -17,8 +17,6 @@ function hologram.setup(opts)
   if opts.auto_display == true then
     vim.api.nvim_set_decoration_provider(vim.g.hologram_extmark_ns, {
       on_win = function(_, win, buf, top, bot)
-        print("ON WIN")
-        print(vim.bo.filetype)
         if allowedFiletype[vim.bo.filetype] ~= nil then
           vim.schedule(function()
             hologram.buf_render_images(buf, top, bot)
@@ -115,7 +113,6 @@ function hologram._download_file(source)
   if hasHttp then
     --local hash = md5.sum("")
     local path = os.tmpname()
-    print("DEBUG: " .. path .. " " .. source)
     --local path = '/home/lucas/' .. filename
     http.get(source, { output = path })
     return path
@@ -131,7 +128,6 @@ function hologram.find_source(line)
       local source = inline_link:match('%((.+)%)')
       local path = ""
       if hologram._is_link(source) then
-        print("DEBUG: " .. source)
         path = hologram._download_file(source)
       else
         path = hologram._to_absolute_path(source)
