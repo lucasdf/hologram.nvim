@@ -31,9 +31,11 @@ function Image:new(source, keys)
 
     assert(type(source) == 'string', 'Image source is not a valid string')
     if keys.data_width == nil and keys.data_height == nil then
-        if source:sub(-4) == '.png' then
             keys.data_width, keys.data_height = fs.get_dims_PNG(source)
-        end
+        -- TODO: this is always PNG for now; temp file from downloaded iamge doesnt contain extension
+        --if source:sub(-4) == '.png' then
+            --keys.data_width, keys.data_height = fs.get_dims_PNG(source)
+        --end
     end
     local cols = math.ceil(keys.data_width/state.cell_size.x)
     local rows = math.ceil(keys.data_height/state.cell_size.y)
